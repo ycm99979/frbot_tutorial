@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+ <link name="base_link"/>
+  <joint name="base_link_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="chassis_link"/>
+  </joint>
+  
+  <link name="chassis_link">
+    <visual>
+      <origin rpy="1.57079632679 0 1.57079632679" xyz="0 0 -0.0655"/>
+      <geometry>
+        <mesh filename="file://$(find frbot_description)/meshes/jackal-base.stl"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.092"/>
+      <geometry>
+        <box size="0.42 0.31 0.184"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <!-- Center of mass -->
+      <origin rpy="0 0 0" xyz="0.012  0.002 0.067"/>
+      <mass value="16.523"/>
+      <!-- Moments of inertia: ( chassis without wheels ) -->
+      <inertia ixx="0.3136" ixy="-0.0008" ixz="0.0164" iyy="0.3922" iyz="-0.0009" izz="0.4485"/>
+    </inertial>
+  </link>
+
+
+  <link name="front_fender_link">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find frbot_description)/meshes/jackal-fender.stl"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+  </link>
+  <joint name="front_fender_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="chassis_link"/>
+    <child link="front_fender_link"/>
+  </joint>
+
+
+  <link name="rear_fender_link">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find frbot_description)/meshes/jackal-fender.stl"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+  </link>
+  <joint name="rear_fender_joint" type="fixed">
+    <origin rpy="0 0 3.14159265359" xyz="0 0 0"/>
+    <parent link="chassis_link"/>
+    <child link="rear_fender_link"/>
+  </joint>
+
+
+</robot>

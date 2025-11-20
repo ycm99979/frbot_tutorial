@@ -1,0 +1,91 @@
+<!-- params
+     chassis size = 0.6 0.32 0.235 [m]
+     chassis mass = 10 [kg]
+     wheel radius = 0.103 [m]
+     wheel thickness = 0.0752 [m]
+     wheel mass = 4 [kg] 
+     wheel seperation = 0.5 [m]
+     no load speed = -21.9 21.9 [rad/s]
+     stall torque = 25.4 [Nm]
+     Friction Loss = 0.08 [Nm] -->
+
+<mujoco model = "frbot">
+  <compiler angle="radian" meshdir="" autolimits="true"/>
+  
+  <option integrator="implicit" gravity="0 0 -9.81"/>
+  
+  <default>
+    <joint limited="false" armature="0.01"/> 
+    <equality solref="0.02 1" solimp="0.9 0.95 0.001"/>
+  </default>
+  
+  <visual>
+    <rgba rangefinder="0 0 1 0.1"/>
+  </visual>
+  
+  <worldbody>
+    <geom name="floor" type="plane" pos="0 0 0" size="5 5 0.1" rgba="0.9 0.9 0.9 1"
+          friction="1.0 0.005 0.001"/>
+          
+    <body name="base" pos="0 0 0">
+      <joint type="free" name="base_joint"/>
+
+      <!-- base joint 자유도 free로 설정해서 위치, 자세 제어 가능 -->
+
+      <body name="chassis" pos="0 0 0">
+        <!-- diaginertia는 Ixx Iyy Izz 3개만! -->
+        <inertial pos="-0.01 0 0.103" mass="10.0"
+                  diaginertia="0.013135416666666667 0.034602083333333325 0.03853333333333333"/>
+        <geom name="chassis_geom" type="box" size="0.3 0.16 0.1175" pos="-0.01 0 0.103"/>
+
+        <body name="front_left_wheel" pos="0.23 -0.25 0" quat="0.70710678 0.70710678 0 0">
+          <joint name="front_left_wheel_joint" type="hinge" axis="0 0 1"/>
+          <inertial pos="0 0 0" mass="4"
+                    diaginertia="0.012494013333333333 0.012494013333333333 0.021218"/>
+          <geom name="front_left_wheel_geom" type="cylinder" size="0.103 0.0376"
+                rgba="0.17 0.17 0.17 1" pos="0 0 0" friction="2.5 0.005 0.005"/>
+        </body>
+
+        <body name="front_right_wheel" pos="0.23 0.25 0" quat="0.70710678 0.70710678 0 0">
+          <joint name="front_right_wheel_joint" type="hinge" axis="0 0 1"/>
+          <inertial pos="0 0 0" mass="4"
+                    diaginertia="0.012494013333333333 0.012494013333333333 0.021218"/>
+          <geom name="front_right_wheel_geom" type="cylinder" size="0.103 0.0376"
+                rgba="0.17 0.17 0.17 1" pos="0 0 0" friction="2.5 0.005 0.005"/>
+        </body>
+
+        <body name="rear_left_wheel" pos="-0.23 -0.25 0" quat="0.70710678 0.70710678 0 0">
+          <joint name="rear_left_wheel_joint" type="hinge" axis="0 0 1"/>
+          <inertial pos="0 0 0" mass="4"
+                    diaginertia="0.012494013333333333 0.012494013333333333 0.021218"/>
+          <geom name="rear_left_wheel_geom" type="cylinder" size="0.103 0.0376"
+                rgba="0.17 0.17 0.17 1" pos="0 0 0" friction="2.5 0.005 0.005"/>
+        </body>
+
+        <body name="rear_right_wheel" pos="-0.23 0.25 0" quat="0.70710678 0.70710678 0 0">
+          <joint name="rear_right_wheel_joint" type="hinge" axis="0 0 1"/>
+          <inertial pos="0 0 0" mass="4"
+                    diaginertia="0.012494013333333333 0.012494013333333333 0.021218"/>
+          <geom name="rear_right_wheel_geom" type="cylinder" size="0.103 0.0376"
+                rgba="0.17 0.17 0.17 1" pos="0 0 0" friction="2.5 0.005 0.005"/>
+        </body>
+
+      </body> <!-- /chassis -->
+    </body>   <!-- /base -->
+  </worldbody>
+  
+  <!-- actuator 
+       velocity name: 속도제어 
+       ctrllimited: 제어 한계 ON
+       ctrlrange: 제어 범위 -100.0 rad/s ~ 100 rad/s
+       gear: 액추에이터의 힘과 속도를 조인트에 어떻게 전달할지 결정 (여기선 1)
+       kv (damping coefficient): 감쇠 계수로 관절 속도에 비례하는 저항력 생성 F = -kv * velocity * control -->
+  
+  <actuator>
+    <velocity name="fl_motor" joint="front_left_wheel_joint" gear="1" ctrllimited="true" ctrlrange="-21.9 21.9" kv="1.0"/>
+    <velocity name="fr_motor" joint="front_right_wheel_joint" gear="1" ctrllimited="true" ctrlrange="-21.9 21.9" kv="1.0"/>
+    <velocity name="rl_motor" joint="rear_left_wheel_joint" gear="1" ctrllimited="true" ctrlrange="-21.9 21.9" kv="1.0"/>
+    <velocity name="rr_motor" joint="rear_right_wheel_joint" gear="1" ctrllimited="true" ctrlrange="-21.9 21.9" kv="1.0"/>
+  </actuator>
+  
+</mujoco>

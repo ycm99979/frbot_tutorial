@@ -1,0 +1,23 @@
+frbot_description: 로봇의 형태를 ROS2가 이해할 수 있도록 표현하는 패키지
+
+launch
+- frbot_fake_hardware.launch.py: ros2 controllers spawn 확인용 (rviz) 
+- frbot_rviz.launch.py: urdf, xacro 파일 및 meshes 확인용 (rviz) 
+
+meshes
+- 로봇을 구성하는 stl 파일들 모음
+
+mujoco_models 
+- xml 형식으로 mujoco에 모델을 스폰할 때 필요
+
+rviz 
+- rviz 설정 파일
+
+urdf 
+- robot_final.urdf.xacro: 로봇 통합본 (최종본)
+- robot_core.urdf.xacro: 로봇 본체 통합본
+- ros_control.urdf.xacro: ros2 control용 
+- robot_base.urdf.xacro: 로봇의 몸통을 정의
+- ~~ wheel.xacro: 개별 바퀴 
+- material.xacro: 색상 
+- frbot.urdf: urdf 버전
