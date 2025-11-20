@@ -1,0 +1,9 @@
+<library path="frbot_hardware"> <!-- include 하위 패키지 이름 -->
+  <class name="frbot_hardware::FrbotHardware"
+         type="frbot_hardware::FrbotHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Frbot hardware interface plugin
+    </description>
+  </class>
+</library>

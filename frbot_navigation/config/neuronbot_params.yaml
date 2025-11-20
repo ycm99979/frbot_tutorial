@@ -1,0 +1,20 @@
+"# Split parameter files"
+"# This file is left as an index/reference. The original big parameter file has been split into multiple files
+"# located in the same directory. To load them in a launch file, provide a list of parameter files to the node,
+"# for example: params=[Path('param/amcl.yaml'), Path('param/controller.yaml'), ...]
+
+parameter_files:
+  - amcl.yaml
+  - bt_navigator.yaml
+  - controller.yaml
+  - local_costmap.yaml
+  - global_costmap.yaml
+  - map.yaml
+  - planner.yaml
+  - smoother.yaml
+  - behavior.yaml
+  - robot_state_publisher.yaml
+  - waypoint_follower.yaml
+
+# Note: ROS 2 does not support YAML include natively. Keep thisㅏ index for humans and launch-file reference.
+# If you want, I can also automatically update the launch files to reference these parameter files.
